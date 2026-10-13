@@ -6,31 +6,31 @@ const form = document.querySelector(".form");
 form.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const delay = event.target.elements.delay.value;
+    const delay = Number(event.target.elements.delay.value);
     const state = event.target.elements.state.value;
 
     const promise = new Promise((resolve, reject) => {
         setTimeout(() => {
             if (state === "fulfilled") {
-                resolve();
+                resolve(delay);
             } else {
-                reject();
+                reject(delay);
             }
         },delay);
     });
 
     promise
-        .then(() => {
+        .then(delay => {
             iziToast.success({
                 title: "Success",
-                message: `Promise fulfilled after ${delay}ms`,
+                message: `Fulfilled promise in ${delay}ms`,
                 iconColor: '#fff',
             });
         })
-        .catch(() => {
+        .catch(delay => {
             iziToast.error({
                 title: "Error",
-                message: `Promise rejected after ${delay}ms`,
+                message: `Rejected promise in ${delay}ms`,
                 iconColor: '#fff',
             })
         })
